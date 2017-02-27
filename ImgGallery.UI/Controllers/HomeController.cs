@@ -98,5 +98,27 @@ namespace ImgGallery.UI.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        // GET: /photo/Delete/5
+        [HttpGet]
+        public async Task<ActionResult> Delete(Guid? id)
+        {
+            var getFromR = await PhotoAutomapper.FromBltoUiGetById((Guid) id);
+            ViewBag.AlbumId = new SelectList(AlbumAutomapper.FromBltoUiGetAll(), "AlbumId", "AlbumName");
+            if (getFromR == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_Delete", getFromR);
+        }
+
+        //
+        // POST: /photo/Delete/5
+        [HttpPost, ActionName("Delete")]
+        public async Task<ActionResult> DeleteConfirmed(Guid id)
+        {
+            await PhotoAutomapper.FromBltoUiDeleteAsync(id);
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -65,15 +65,7 @@
                 data: myformPhoto,
                 success: function (data) {
                     $('#myModal1').modal('hide');
-                  location.reload();
-                //    $.ajax({
-                //        url: "/Home/List",
-                //        type: "GET",
-                //        dataType: "html",
-                //        success: function(data) {
-                //            $('#ShowList').html(data);
-                //        }
-                //});
+                    showing();
                 },
                 error: function (data) {
 

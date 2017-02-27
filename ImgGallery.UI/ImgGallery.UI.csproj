@@ -265,6 +265,7 @@
     <Content Include="Views\Home\_CreatePhotos.cshtml" />
     <Content Include="Views\Home\_list.cshtml" />
     <Content Include="Views\Home\_Edit.cshtml" />
+    <Content Include="Views\Home\_Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

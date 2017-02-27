@@ -1,0 +1,81 @@
+﻿
+@model ViewModels.Models.PhotoViewModel
+
+<form class="form-horizontal" id="myDForm">
+    @*<h4>photo</h4>*@
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.PhotoId,new { @id = "Pid" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhotoName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.PhotoName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhotoName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhotoDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.PhotoDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhotoDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhotoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.PhotoPath, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhotoPath, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AlbumId, "AlbumId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.LabelFor(model => model.AlbumId, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.DropDownList("AlbumId", ViewBag.album as SelectList, htmlAttributes: new { @readonly = "true"})
+            @Html.ValidationMessageFor(model => model.AlbumId, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" class="btn btn-default" value="Save" onclick="SaveEmployee()" />
+            </div>
+        </div>*@
+</form>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnDelete").on('click', function () {
+            //debugger;
+            var id = $("#Pid").val();
+            
+            $.ajax({
+                method: "POST",
+               
+                url: "/Home/Delete?id=" + id,
+                //data: myformD,
+                success: function (data) {
+                    $('#myModal1').modal('hide');
+                    showing();
+                },
+                error: function (data) {
+
+                }
+
+            });
+        });
+    });
+</script>

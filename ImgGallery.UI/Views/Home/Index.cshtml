@@ -3,10 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-
 <h2>Index</h2>
-
-
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" onclick="CreatePhoto()">
     Add New Photo
@@ -27,7 +24,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary btnSave">Save changes</button>
+                <button type="button" class="btn btn-primary btnSave">Save</button>
             </div>
         </div>
     </div>
@@ -37,20 +34,15 @@
 <div class="container" id="theTable">
     <div class="row">
         <div id="ShowList">
-            @Html.Partial("_list")
+            @*@Html.Partial("_list")*@
 
         
         </div>
     </div>
 </div>
 
-@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
    
-    $(document).ready(function() {
-        //debugger;
-       
-       
-    });
+ 
    
 </script>

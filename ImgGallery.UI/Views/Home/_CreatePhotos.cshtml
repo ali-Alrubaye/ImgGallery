@@ -69,25 +69,18 @@
                 url: "/Home/Create",
                 data: formData,
                 //dataType: "json",
-
                 success: function (data) {
                     if (data.Status > 0) {
                         $("#notify").text("Added Photo Success");
                     } else {
                         $("#notify").text(data.Message);
-
                     }
-                    //$("updates").update();
-                    $('#myModal1').modal('hide');
-                    location.reload();
-                    //$("#ShowList").load(function () {
-                    //    debugger;
-                    //    var listP = $(this);
-                    //    listP.load("/Home/Index");
-                    //});
+                    //$('.btnSave').reset();
+                   $('#myModal1').modal('hide');
+                   
+                    showing();
                 },
                 error: function (data) {
-
                 },
                 processData: false,
                 contentType: false
