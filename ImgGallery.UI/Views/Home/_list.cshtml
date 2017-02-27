@@ -1,0 +1,39 @@
+﻿@*@model IEnumerable<ViewModels.Models.PhotoViewModel>*@
+
+<!-- Main List -->
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="thumbnail">
+
+                    @*<a href="#" class="">*@
+                    <div class="caption">
+
+                        <h4 class="">@item.AlbumPhV.AlbumName</h4>
+                        <p class="">@item.Description </p>
+                        <p class="">@item.PhotoId </p>
+                        @*<button id="editbtn" class="btn btn-info" type="button">Edit</button>*@
+                        @*<button type="button" id=@item.AlbumId class="btn btn-info " data-toggle="modal" data-target="#myModal">Edit</button>*@
+                        <button type="button" id=@item.PhotoId  class="btn btn-primary" data-toggle="modal" data-target="#myModal1" onclick="EditPhoto(id)">
+                            Edit
+                        </button>
+                        <div id="result" style="display: none;"></div>
+                        <button id="deletebtn" class="btn btn-danger">Delete</button>
+                    </div>
+                    <img src="~/GalleryImages/@item.PhotoPath" alt="@item.PhotoName" class="imglist">
+                    @*</a>*@
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- End Main List -->
+<style>
+  .thumbnail > .imglist {
+        width: 100%;
+        height: 100%;
+    }
+</style>

@@ -1,0 +1,97 @@
+﻿@model ViewModels.Models.PhotoViewModel
+
+<form class="form-horizontal" id="myFormPhoto">
+    @*<h4>Photo</h4>
+        <hr />*@
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhotoName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhotoName, new { htmlAttributes = new { @id = "txtName", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhotoName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhotoDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhotoDate, new { htmlAttributes = new { @id = "txtDate", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhotoDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @id = "txtDesc", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhotoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.photoPath, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.TextBoxFor(m => m.PhotoPath, new { type = "file", name = "UploadFile", id = "txtUploadFile", enctype = "multipart/form-data" })
+            @Html.ValidationMessageFor(model => model.PhotoPath, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AlbumId, "AlbumId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AlbumId", ViewBag.AlbumId as SelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.AlbumId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default"/>
+            </div>
+        </div>*@
+</form>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnSavePhotoC").on('click', function () {
+            //debugger;
+            var formData = new FormData();
+            formData.append('PhotoName', $("#txtName").val());
+            formData.append('PhotoDate', $("#txtDate").val());
+            formData.append('Description', $("#txtDesc").val());
+            formData.append('PhotoPath', $("#txtUploadFile")[0].files[0]);
+            formData.append('AlbumId', $("#AlbumId").val());
+            //var myformPhoto = $("#myFormPhoto").serialize();
+            $.ajax({
+                method: "POST",
+                url: "/Home/Create",
+                data: formData,
+                //dataType: "json",
+
+                success: function (data) {
+                    if (data.Status > 0) {
+                        $("#notify").text("Added Photo Success");
+                    } else {
+                        $("#notify").text(data.Message);
+
+                    }
+                    //$("updates").update();
+                    $('#myModal1').modal('hide');
+                    location.reload();
+                    //$("#ShowList").load(function () {
+                    //    debugger;
+                    //    var listP = $(this);
+                    //    listP.load("/Home/Index");
+                    //});
+                },
+                error: function (data) {
+
+                },
+                processData: false,
+                contentType: false
+            });
+        });
+    });
+</script>

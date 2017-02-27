@@ -1,0 +1,139 @@
+﻿@model ViewModels.Models.PhotoViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<script>
+    //1.Calling Function GetAlbum
+    $(document).ready(function() {
+        $.ajax({
+            url: "/Home/GetAlbum",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                //alert("Success");
+                //alert(data.length);
+                $.each(data, function(i, album) {
+                    $("#slAlbum").append("<option value=" + album.AlbumId + ">" + album.AlbumName + "</option>");
+                });
+            },
+            error: function() {
+                //alert("Error");
+
+            }
+        });
+
+        $("#btnCreate").click(function() {
+            var name = $("#txtName").val();
+            var date = $("#txtDate").val();
+            var desc = $("#txtDesc").val();
+            var path = $("#txtPath").val();
+            var albumId = $("#slAlbum").val();
+            $.ajax({
+                url: "/Home/CreatePhoto",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    PhotoName: name,
+                    PhotoDate: date,
+                    Description: desc,
+                    PhotoPath: path,
+                    AlbumId: albumId
+
+                },
+                success: function(data) {
+                    if (data.status == 1) {
+                        $("#notify").text(data.Message);
+                    } else {
+                        $("#notify").text(data.Message);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(xhr.responseText);
+                    alert(thrownError);
+                },
+                processData: false,
+                contentType: false
+            });
+        });
+    });
+</script>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginForm("CreatePhoto", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Photo</h4>
+        <hr/>
+
+        <div class="form-group">
+            @Html.Label("PhotoName", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBox("PhotoName", null, new {@id = "txtName", @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("PhotoDate", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBox("PhotoDate", null, new {@id = "txtDate", @type = "date", @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Description", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBox("Description", null, new {@id = "txtDesc", @class = "form-control"})
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("PhotoPath", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.photoPath, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextBoxFor(m => m.PhotoPath, new { type = "file" })
+                @*<input type="file" id="txtPath"/>*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("AlbumId", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                <select id="slAlbum"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @*<input type="submit" value="Create" class="btn btn-default"/>*@
+                <input id="btnCreate" type="submit" value="Create New" class="btn btn-default"/>
+                <div id="notify"></div>
+            </div>
+        </div>
+    </div>
+}
