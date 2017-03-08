@@ -4,6 +4,10 @@ $(document).ready(function () {
     showing();
 
 });
+
+function close() {
+    displayList();
+}
 function showing() {
          //Start Function Upload Photo to Index View.........
     $(".ShowList").load("/Home/List", function () {
