@@ -6,7 +6,7 @@ $(document).ready(function () {
 });
 function showing() {
          //Start Function Upload Photo to Index View.........
-    $("#ShowList").load("/Home/List", function () {
+    $(".ShowList").load("/Home/List", function () {
         //Call Function to display photos in Index View.......
         displayList();
     });

@@ -61,6 +61,7 @@
             var myformPhoto = $("#myEForm").serialize();
             $.ajax({
                 method: "POST",
+                cash: false,
                 url: "/Home/Edit",
                 data: myformPhoto,
                 success: function (data) {
